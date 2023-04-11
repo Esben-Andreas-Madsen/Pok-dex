@@ -1,0 +1,16 @@
+.pokebox {
+    background-color: bisque;
+    border: 2px;
+    border-color: black;
+    border-style: solid;
+    text-align: left;
+    border-radius: 20px;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    padding: 0px 10px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    
+}
