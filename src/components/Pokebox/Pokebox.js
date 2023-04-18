@@ -3,32 +3,48 @@ import styles from "./pokebox.module.css";
 
 function Pokebox() {
   let [pokemon, setPokemon] = useState(null);
+  let [page, setPage] = useState(0);
 
   useEffect(() => {
+    let pokemonsData = [];
+
+    async function fetchData() {
+      await fetch("https://pokeapi.co/api/v2/pokemon?limit=" + 20)
+        .then((response) => response.json())
+        .then(function (allpokemonurl) {
+          allpokemonurl.results.forEach(function (pokemonurl) {
+            fetchPokemonData(pokemonurl);
+          });
+        });
+
+      async function fetchPokemonData(pokemonurl) {
+        await fetch(pokemonurl.url)
+          .then((response) => response.json())
+          .then((pkmn) => pokemonsData.push(pkmn));
+      }
+      setPokemon(pokemonsData);
+    }
+
     fetchData();
-  }, []);
+    setPage(2);
+    console.log(pokemon);
+  }, [page]);
+  
 
-  async function fetchData() {
-    await fetch("https://pokeapi.co/api/v2/pokemon/?limit=" + 20)
-      .then((response) => response.json())
-      .then((result) => setPokemon(result.results));
-  }
-
-
-  if(pokemon) {
-    return (
-      <>
-        {pokemon.map((pokemon) => (
-          <div key={pokemon.id} className={styles.pokebox}>
-            <p>#{pokemon.id}</p>
-            <p>{pokemon.name}</p>
-          </div>
-        ))}
-      </>
-    );
-  } else {
-    <p>loading</p>
-  }
+  return (
+    <>
+      {pokemon.map((pkmn) => (
+        <div key={pkmn.id} className={styles.pokebox}>
+          <p>#{pkmn.id}</p>
+          <p>{pkmn.name}</p>
+          <p>
+            Type: {pkmn.types[0].type.name} {pkmn.types[1]?.type.name}
+          </p>
+          <img src={pkmn.sprites.front_default} alt="pokemon" />
+        </div>
+      ))}
+    </>
+  );
 }
 
 export default Pokebox;
