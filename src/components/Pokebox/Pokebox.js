@@ -1,4 +1,49 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import styles from "./pokebox.module.css";
+
+function Pokebox() {
+  let [pokemon, setPokemon] = useState(null);
+  let [page, setPage] = useState(0);
+
+  useEffect(() => {
+    async function fetchData() {
+      let response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=20");
+      let data = await response.json();
+      let promises = data.results.map(async (result) => {
+        let pokemonResponse = await fetch(result.url);
+        return pokemonResponse.json();
+      });
+      const pokemonData = await Promise.all(promises);
+      setPokemon(pokemonData);
+    }
+
+    fetchData();
+  }, [page]);
+
+  if (!pokemon) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div className="poke-container">
+      {pokemon.map((pkmn) => (
+        <div key={pkmn.id} className={styles.pokebox}>
+          <p>#{pkmn.id}</p>
+          <p>{pkmn.name}</p>
+          <p>
+            Type: {pkmn.types[0].type.name} {pkmn.types[1]?.type.name}
+          </p>
+          <img src={pkmn.sprites.front_default} alt="pokemon" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default Pokebox;
+
+
+/* import { useState, useEffect } from "react";
 import styles from "./pokebox.module.css";
 
 function Pokebox() {
@@ -34,7 +79,7 @@ function Pokebox() {
   return (
     <>
       {pokemon.map((pkmn) => (
-        <div key={pkmn.id} className={styles.pokebox}>
+        <div key={pkmn.id}>
           <p>#{pkmn.id}</p>
           <p>{pkmn.name}</p>
           <p>
@@ -47,7 +92,11 @@ function Pokebox() {
   );
 }
 
-export default Pokebox;
+export default Pokebox; */
+
+
+
+
 
 /* import { useState, useEffect } from "react";
 import styles from "./pokebox.module.css";
