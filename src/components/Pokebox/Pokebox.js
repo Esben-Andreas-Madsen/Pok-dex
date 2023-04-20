@@ -4,6 +4,7 @@ import styles from "./pokebox.module.css";
 function Pokebox() {
   const [pokemon, setPokemon] = useState([]);
   const [page, setPage] = useState(0);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [largeImage, setLargeImage] = useState(null);
 
   useEffect(() => {
@@ -90,20 +91,29 @@ function Pokebox() {
               backgroundColor: getTypeColor(pkmn.types[0].type.name),
               border: `2px solid ${getTypeColor(pkmn.types[0].type.name)}`,
             }}
-            onClick={() => setLargeImage(pkmn.sprites.other['official-artwork'].front_default)}
+            onClick={() => setLargeImage(pkmn.sprites.other["official-artwork"].front_default)}
           >
-            <div className={styles.pokemonNumber}>#{page + index + 1}</div>
-            <div className={styles.pokemonName}>
-              {pkmn.name}
-              <br />
-              {pkmn.types.map((type) => type.type.name).join(", ")}
-            </div>
             <div className={styles.pokemonImageContainer}>
               <img
                 src={pkmn.sprites.front_default}
                 alt={pkmn.name}
                 className={styles.pokemonImage}
               />
+            </div>
+            <div className={styles.pokemonInfo}>
+              <div className={styles.pokemonNumber}>#{page + index + 1}</div>
+              <div className={styles.pokemonName}>{pkmn.name}</div>
+              <div className={styles.pokemonTypes}>
+                {pkmn.types.map((type) => (
+                  <div
+                    key={type.type.name}
+                    className={styles.pokemonType}
+                    style={{ backgroundColor: getTypeColor(type.type.name) }}
+                  >
+                    {type.type.name}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         ))}
