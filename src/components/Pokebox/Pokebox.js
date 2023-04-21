@@ -106,8 +106,7 @@ function Pokebox() {
             </div>
             <div className={styles.pokemonInfo}>
               <p>#{page + index + 1}</p>
-              <p1>{pkmn.name}</p1>
-              <p2>
+              <p className={styles.pokemon}>{pkmn.name}</p>
                 {pkmn.types.map((type) => (
                   <div
                     key={type.type.name}
@@ -117,7 +116,6 @@ function Pokebox() {
                     {type.type.name}
                   </div>
                 ))}
-              </p2>
             </div>
           </div>
         ))}
@@ -133,7 +131,6 @@ function Pokebox() {
             />
             <div className={styles.modalPokemonInfo}>
               <h2>{selectedPokemon.name}</h2>
-              <p>
                 {selectedPokemon.types.map((type) => (
                   <div
                     key={type.type.name}
@@ -143,8 +140,7 @@ function Pokebox() {
                     {type.type.name}
                   </div>
                 ))}
-              </p>
-              <p2>Height: {selectedPokemon.height / 10} m</p2>
+              <p>Height: {selectedPokemon.height / 10} m</p>
               <p>Weight: {selectedPokemon.weight / 10} kg</p>
               <p>Abilities: {selectedPokemon.abilities.map((a) => a.ability.name).join(", ")}</p>
             </div>
