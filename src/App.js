@@ -1,10 +1,13 @@
 import Pokebox from "./components/Pokebox/Pokebox";
 
+
 function App() {
   return (
-    <div>
+    <>
+      <div>
         <Pokebox />
-    </div>
+      </div>
+    </>
   );
 }
 
