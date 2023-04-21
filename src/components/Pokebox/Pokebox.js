@@ -101,19 +101,16 @@ function Pokebox() {
               />
             </div>
             <div className={styles.pokemonInfo}>
-              <div className={styles.pokemonNumber}>#{page + index + 1}</div>
-              <div className={styles.pokemonName}>{pkmn.name}</div>
-              <div className={styles.pokemonTypes}>
+            <p>#{page + index + 1}</p>
+              <p>{pkmn.name}</p>
+              <p>
                 {pkmn.types.map((type) => (
-                  <div
-                    key={type.type.name}
-                    className={styles.pokemonType}
-                    style={{ backgroundColor: getTypeColor(type.type.name) }}
-                  >
+                  <div key={type.type.name} className={styles.pokemonType}
+                    style={{ backgroundColor: getTypeColor(type.type.name) }}>
                     {type.type.name}
                   </div>
                 ))}
-              </div>
+              </p>
             </div>
           </div>
         ))}

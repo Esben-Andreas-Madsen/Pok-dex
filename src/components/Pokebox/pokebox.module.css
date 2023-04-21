@@ -22,6 +22,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    margin-top: 100px;
   }
   
   .pokebox {
@@ -32,7 +33,7 @@
     border-radius: 20px;
     margin-bottom: 20px;
     width: calc(19% - 20px);
-    height: 125px;
+    height: 135px;
     box-sizing: border-box;
     overflow: hidden;
   }
@@ -57,10 +58,12 @@
     max-width: 200%;
     max-height: 200%;
     margin-left: 0px;
-    margin-top: 0px;
+    margin-top: 20px;
     display: block;
     transition: transform 0.2s ease-in-out;
   }
+
+
   
   .pokebox:hover img {
     transform: scale(1.5);
@@ -82,7 +85,14 @@
     max-height: 80%;
     max-width: 80%;
   }
+
+  .pokebox p{
+  margin-left: 40px;
+  }
+
   
+ 
+
   
 
   
