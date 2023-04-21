@@ -106,7 +106,7 @@ function Pokebox() {
               <p>
                 {pkmn.types.map((type) => (
                   <div key={type.type.name} className={styles.pokemonType}
-                    style={{ backgroundColor: getTypeColor(type.type.name) }}>
+                    style={{ backgroundColor: (type.type.name) }}>
                     {type.type.name}
                   </div>
                 ))}
