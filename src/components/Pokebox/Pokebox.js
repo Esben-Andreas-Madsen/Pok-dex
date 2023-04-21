@@ -101,7 +101,7 @@ function Pokebox() {
               />
             </div>
             <div className={styles.pokemonInfo}>
-            <p>#{page + index + 1}</p>
+            <p1>#{page + index + 1}</p1>
               <p>{pkmn.name}</p>
               <p>
                 {pkmn.types.map((type) => (
