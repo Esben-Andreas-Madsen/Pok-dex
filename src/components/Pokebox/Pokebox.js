@@ -74,6 +74,7 @@ function Pokebox() {
     }
   }
 
+
   return (
     <>
       <div className={styles.buttonContainer}>
@@ -91,7 +92,10 @@ function Pokebox() {
               backgroundColor: getTypeColor(pkmn.types[0].type.name),
               border: `2px solid ${getTypeColor(pkmn.types[0].type.name)}`,
             }}
-            onClick={() => setLargeImage(pkmn.sprites.other["official-artwork"].front_default)}
+            onClick={() => {
+              setSelectedPokemon(pkmn);
+              setLargeImage(pkmn.sprites.other["official-artwork"].front_default);
+            }}
           >
             <div className={styles.pokemonImageContainer}>
               <img
@@ -101,120 +105,50 @@ function Pokebox() {
               />
             </div>
             <div className={styles.pokemonInfo}>
-            <p1>#{page + index + 1}</p1>
-              <p>{pkmn.name}</p>
-              <p>
+              <p>#{page + index + 1}</p>
+              <p className={styles.pokemon}>{pkmn.name}</p>
                 {pkmn.types.map((type) => (
-                  <div key={type.type.name} className={styles.pokemonType}
-                    style={{ backgroundColor: (type.type.name) }}>
+                  <div
+                    key={type.type.name}
+                    className={styles.pokemonType}
+                    style={{ backgroundColor: (type.type.name) }}
+                  >
                     {type.type.name}
                   </div>
                 ))}
-              </p>
             </div>
           </div>
         ))}
       </div>
-      {largeImage && (
-        <div className={styles.modalContainer} onClick={() => setLargeImage(null)}>
-          <img src={largeImage} alt="Large Pokemon" className={styles.modalImage} />
+  
+      {selectedPokemon && (
+        <div className={styles.modalContainer} onClick={() => setSelectedPokemon(null)}>
+          <div className={styles.modalContent}>
+            <img
+              src={selectedPokemon.sprites.other["official-artwork"].front_default}
+              alt={selectedPokemon.name}
+              className={styles.modalPokemonImage}
+            />
+            <div className={styles.modalPokemonInfo}>
+              <h2>{selectedPokemon.name}</h2>
+                {selectedPokemon.types.map((type) => (
+                  <div
+                    key={type.type.name}
+                    className={styles.modalPokemonType}
+                    style={{ backgroundColor: (type.type.name) }}
+                  >
+                    {type.type.name}
+                  </div>
+                ))}
+              <p>Height: {selectedPokemon.height / 10} m</p>
+              <p>Weight: {selectedPokemon.weight / 10} kg</p>
+              <p>Abilities: {selectedPokemon.abilities.map((a) => a.ability.name).join(", ")}</p>
+            </div>
+          </div>
         </div>
       )}
     </>
   );
-  
 }
 
 export default Pokebox;
-
-
-/* import { useState, useEffect } from "react";
-import styles from "./pokebox.module.css";
-
-function Pokebox() {
-  let [pokemon, setPokemon] = useState(null);
-  let [page, setPage] = useState(0);
-
-  useEffect(() => {
-    let pokemonsData = [];
-
-    async function fetchData() {
-      await fetch("https://pokeapi.co/api/v2/pokemon?limit=" + 20)
-        .then((response) => response.json())
-        .then(function (allpokemonurl) {
-          allpokemonurl.results.forEach(function (pokemonurl) {
-            fetchPokemonData(pokemonurl);
-          });
-        });
-
-      async function fetchPokemonData(pokemonurl) {
-        await fetch(pokemonurl.url)
-          .then((response) => response.json())
-          .then((pkmn) => pokemonsData.push(pkmn));
-      }
-      setPokemon(pokemonsData);
-    }
-
-    fetchData();
-    setPage(2);
-    console.log(pokemon);
-  }, [page]);
-  
-
-  return (
-    <>
-      {pokemon.map((pkmn) => (
-        <div key={pkmn.id}>
-          <p>#{pkmn.id}</p>
-          <p>{pkmn.name}</p>
-          <p>
-            Type: {pkmn.types[0].type.name} {pkmn.types[1]?.type.name}
-          </p>
-          <img src={pkmn.sprites.front_default} alt="pokemon" />
-        </div>
-      ))}
-    </>
-  );
-}
-
-export default Pokebox; */
-
-
-
-
-
-/* import { useState, useEffect } from "react";
-import styles from "./pokebox.module.css";
-
-function Pokebox() {
-  const [pokemon, setPokemon] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(
-        "https://pokeapi.co/api/v2/pokemon/1"
-        );
-
-      const data = await response.json();
-      setPokemon(data);
-    }
-    fetchData();
-  }, []);
-
-  return pokemon ? (
-    <div className={styles.pokebox}>
-      <div>
-        <p>#{pokemon.id}</p>
-        <p>{pokemon.name}</p>
-        <p>
-          Type: {pokemon.types[0].type.name} {pokemon.types[1]?.type.name}
-        </p>
-      </div>
-      <img src={pokemon.sprites.front_default} alt="pokemon" />
-    </div>
-  ) : (
-    <p>Loading...</p>
-  );
-}
-
-export default Pokebox; */
